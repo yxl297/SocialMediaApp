@@ -1,0 +1,6 @@
+Able to Compile
+
+UserController
+- registerUser() tested in postman
+- getUserById() tested in postman and browser
+- getAllUsers() tested in postman and browser
