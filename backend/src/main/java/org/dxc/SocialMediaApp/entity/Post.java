@@ -19,9 +19,10 @@ public class Post {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long postId;
-	private String postContent;
-	private Date postTimeStamp;
+	private Long id;
+	private String title;
+	private String content;
 	private String username;
+	private Date timeStamp;
 	
 }

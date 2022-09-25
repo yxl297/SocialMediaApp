@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { RegisterPayload } from '../register-payload';
 import { UserService } from '../user.service';
@@ -14,9 +15,9 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   registerPayload: RegisterPayload;
 
-  constructor(private formBuilder : FormBuilder, private userService : UserService, private router : Router) {
+  constructor(private formBuilder : FormBuilder, private userService : UserService, private router : Router, private matBottomSheetRef : MatBottomSheetRef) {
     this.registerForm = this.formBuilder.group({
-      username:'',
+      username: '',
       email:'',
       password:'',
       confirmPassword:''
@@ -33,8 +34,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-
-
     if (this.registerForm != null && this.registerPayload != null) {
       this.registerPayload.username = this.registerForm.get('username')!.value;
       this.registerPayload.email = this.registerForm.get('email')!.value;
@@ -43,6 +42,7 @@ export class RegisterComponent implements OnInit {
 
       this.userService.register(this.registerPayload).subscribe(data => {
         console.log("register success");
+        this.matBottomSheetRef.dismiss();
         this.router.navigateByUrl('/register-success');
       }, error => {
         console.log("register failure");

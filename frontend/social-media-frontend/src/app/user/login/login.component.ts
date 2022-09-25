@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 import { Router } from '@angular/router';
 import { LoginPayload } from '../login-payload';
 import { UserService } from '../user.service';
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit {
   loginForm : FormGroup;
   loginPayload : LoginPayload;
 
-  constructor(private userService : UserService, private router : Router) {
+  constructor(private userService : UserService, private router : Router, private matBottomSheetRef : MatBottomSheetRef) {
     this.loginForm = new FormGroup({
       username : new FormControl(),
       password : new FormControl()
@@ -36,9 +37,12 @@ export class LoginComponent implements OnInit {
     console.log(this.loginPayload.username + ": " + this.loginPayload.password);
     this.userService.login(this.loginPayload).subscribe(data => {
         console.log("login success");
-        this.router.navigateByUrl('/home');
+        this.matBottomSheetRef.dismiss();
+        this.router.navigateByUrl('/postfeed');
     }, error => {
         console.log("login failure");
     });
   }
+
+  // close bottom sheet on button press
 }

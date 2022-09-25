@@ -2,13 +2,19 @@
   <div class="container">
     <div class="row">
       <!-- title -->
-      <div class="col-md-6">
+      <div class="col-md-3">
         <h1>Social-Media</h1>
       </div>
+      <!-- Add post -->
+      <div class = "col-md-6" *ngIf="userService.isAuthenticated()">
+        <a href="/add-post" class="new-post btn btn-primary">Add Post</a>
+
+      </div>
       <!-- Login and register-->
-      <div class="col-md-6">
-        <a href="/login" class="login btn btn-primary">Login</a>
-        <a href="/register" class="register btn btn-primary">Register</a>
+      <div class="col-md-3" *ngIf="userService.isAuthenticated()">
+        <a href="/logout" class="login btn btn-primary" (click)="logout()">Logout</a>
+
+
       </div>
     </div>
   </div>

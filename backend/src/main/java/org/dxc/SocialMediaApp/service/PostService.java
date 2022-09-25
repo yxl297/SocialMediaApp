@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class PostService {
 	
@@ -23,7 +26,7 @@ public class PostService {
 	private UserService userService;
 	
 	public PostDto createPost(PostDto postDto) {
-		postDto.setPostTimeStamp(Date.from(Instant.now()));
+		postDto.setTimeStamp(Date.from(Instant.now()));
 		
 		User user = userService.getCurrentUser().orElseThrow(() -> 
 				new IllegalArgumentException("No User logged in"));
@@ -38,9 +41,10 @@ public class PostService {
 	
 	public Post mapToPostEntity(PostDto postDto) {
 		Post post = new Post();
-		post.setPostId(null);
-		post.setPostContent(postDto.getPostContent());
-		post.setPostTimeStamp(postDto.getPostTimeStamp());
+		post.setId(null);
+		post.setTitle(postDto.getTitle());
+		post.setContent(postDto.getContent());
+		post.setTimeStamp(postDto.getTimeStamp());
 		post.setUsername(postDto.getUsername());
 		
 		return post;
@@ -49,9 +53,10 @@ public class PostService {
 	
 	public PostDto mapToPostDto(Post post) {
 		PostDto postDto = new PostDto();
-		postDto.setPostId(post.getPostId());
-		postDto.setPostContent(post.getPostContent());
-		postDto.setPostTimeStamp(post.getPostTimeStamp());
+		postDto.setId(post.getId());
+		postDto.setTitle(post.getTitle());
+		postDto.setContent(post.getContent());
+		postDto.setTimeStamp(post.getTimeStamp());
 		postDto.setUsername(post.getUsername());
 		
 		return postDto;

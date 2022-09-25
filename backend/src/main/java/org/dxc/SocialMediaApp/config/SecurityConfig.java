@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @SuppressWarnings("deprecation")
@@ -46,10 +47,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Override
 	public void configure(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.csrf().disable()
+		httpSecurity.cors().and().csrf().disable()
 			.authorizeRequests()
-				.antMatchers("/api/v1/**").permitAll()
-				.anyRequest().authenticated();
+				.antMatchers("/api/v1/users/register", "/api/v1/users/login").permitAll()
+				.anyRequest().authenticated()
+				.and()
+			.logout()
+				.invalidateHttpSession(true)
+				.clearAuthentication(true)
+				.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+				.logoutSuccessUrl("/login?logout")
+				.permitAll();
 		
 		httpSecurity.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}

@@ -27,4 +27,17 @@ export class UserService {
       return true;
     }));
   }
+
+  isAuthenticated() : Boolean {
+    return this.localStorageService.retrieve('username') != null;
+  }
+
+  // isAdmin() : Boolean {
+  //   return
+  // }
+
+  logout() {
+    this.localStorageService.clear('authenticationToken');
+    this.localStorageService.clear('username');
+  }
 }

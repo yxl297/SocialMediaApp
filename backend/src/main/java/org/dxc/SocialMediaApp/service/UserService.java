@@ -83,7 +83,6 @@ public class UserService {
 		}
 		
 		return userResponseList;
-		
 	}
 
 	public AuthenticationResponse login(LoginRequestDto loginRequestDto) {
@@ -101,7 +100,4 @@ public class UserService {
 				.getContext().getAuthentication().getPrincipal();
 		return Optional.of(principal);
 	}
-
-	
-	
 }
