@@ -15,6 +15,8 @@ import { PostService } from '../post.service';
 export class PostfeedComponent implements OnInit {
 
   posts : Observable<PostPayload[]>;
+  postList : PostPayload[];
+  slicedPostList : PostPayload[];
   currentPage : PostPayload[];
   pageNumber : number;
   pageEvent : PageEvent;
@@ -23,16 +25,17 @@ export class PostfeedComponent implements OnInit {
   constructor(private postService : PostService) { }
 
   ngOnInit() {
-    this.posts = this.postService.getAllPosts();
-    this.posts.subscribe((data) => console.log(data));
+    this.postService.getAllPosts().subscribe(data => {
+      this.postList = data;
+      console.log(this.postList);
+    })
+    this.slicedPostList = this.postList.slice(0,10);
+
   }
 
-  // onPageChange(pageEvent) {
-  //   this.pageNumber = pageEvent.pageIndex;
-  //   let addTotalPosts = this.pageNumber * 10;
-  //   this.posts.subscribe
-  //   this.posts.subscribe((data) => {
-
-  // }
-
+  onPageChange(pageEvent : any) {
+    this.pageNumber = pageEvent.pageIndex;
+    let addTotalPosts = this.pageNumber * 10;
+    this.slicedPostList = this.postList.slice(addTotalPosts, 10 + addTotalPosts);
+  }
 }

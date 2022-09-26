@@ -42,7 +42,7 @@ public class UserController {
 	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
 		log.info("saveNewUser() in UserController");
 		List<Role> tempRole = new ArrayList<>();
-		tempRole.add(roleRepository.findByName("ROLE_USER"));
+		tempRole.add(roleRepository.findByName("USER"));
 		userDto.setRoles(tempRole);
 		
 		return new ResponseEntity<UserDto> (userService.registerUser(userDto),HttpStatus.CREATED);

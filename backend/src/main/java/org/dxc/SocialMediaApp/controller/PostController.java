@@ -58,6 +58,6 @@ public class PostController {
 	public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable(name = "id") Long id) {
 		
 		return ResponseEntity.ok(postService.updatePost(postDto, id));
-		
+
 	}
 }

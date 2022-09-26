@@ -4,12 +4,12 @@
       <!-- title -->
       <h1 class="col-md-3">Social-Media</h1>
       <div class="col-md-3" *ngIf="userService.isAdmin()">
-        <a href="/user-list" class="admin btn btn-primary">User List</a>
-        <a href="/post-list" class="admin btn btn-primary">Post List</a>
+        <a href="/user-list" class="admin btn btn-info">User List</a>
+        <a href="/post-list" class="admin btn btn-info">Post List</a>
       </div>
       <div class = "col-md-6" *ngIf="userService.isAuthenticated()">
-        <a href="/add-post" class="new-post btn btn-primary">Add Post</a>
-        <a href="/logout" color="warn" class="logout btn btn-primary" (click)="logout()">Logout</a>
+        <a href="/add-post" class="new-post btn btn-success">Add Post</a>
+        <a href="/logout" color="warn" class="logout btn btn-danger" (click)="logout()">Logout</a>
       </div>
     </div>
   </div>

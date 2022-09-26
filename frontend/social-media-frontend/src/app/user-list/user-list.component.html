@@ -15,7 +15,7 @@
         <td>{{user.username}}</td>
         <td><input [(ngModel)]="user.email" type="text" value={{user.email}}></td>
         <td>
-          <button mat-flat-button color="primary" (click)="updateOnClick(user)">Register</button>
+          <button mat-flat-button color="primary" (click)="updateOnClick(user)">Update</button>
           <button mat-flat-button color="warn" (click)="deleteOnClick(user.uid)">Delete</button>
         </td>
       </tr>
