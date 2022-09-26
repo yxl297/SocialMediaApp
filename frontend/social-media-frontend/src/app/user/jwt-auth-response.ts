@@ -1,4 +1,5 @@
 export class JwtAuthResponse {
   authenticationToken : String;
-  username : String
+  username : String;
+  isAdmin : Boolean;
 }

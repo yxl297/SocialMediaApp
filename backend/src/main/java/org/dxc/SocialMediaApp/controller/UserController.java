@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.dxc.SocialMediaApp.entity.Role;
+import org.dxc.SocialMediaApp.entity.User;
 import org.dxc.SocialMediaApp.payload.LoginRequestDto;
 import org.dxc.SocialMediaApp.payload.UserDto;
 import org.dxc.SocialMediaApp.repository.RoleRepository;
@@ -55,21 +56,27 @@ public class UserController {
 	}
 	
 	// @PreAuthorize("hasRole('ADMIN')")
+//	@GetMapping("admin/all")
+//	public ResponseEntity<List<UserDto>> getAllUsers() {
+//		log.info("getAllUsers() in UserController");
+//        return ResponseEntity.ok(userService.getAllUsers());
+//    }
+	
 	@GetMapping("admin/all")
-	public ResponseEntity<List<UserDto>> getAllUsers() {
-		log.info("getAllUsers() in UserController");
-        return ResponseEntity.ok(userService.getAllUsers());
-    }
+	public List<User> getAllUsers() {
+		return userService.findAll();
+	}
 	
 	@PostMapping("/login")
     public AuthenticationResponse login(@RequestBody LoginRequestDto loginRequestDto) {
+		
         return userService.login(loginRequestDto);
     }
 	
 	@DeleteMapping("admin/delete/{id}")
-	public ResponseEntity<String> deleteUserById(@PathVariable(name="id") Long id) {
+	public ResponseEntity<Void> deleteUserById(@PathVariable(name="id") Long id) {
 		userService.deleteUserById(id);
-		return new ResponseEntity<String>("User deleted successfully", HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	// update email

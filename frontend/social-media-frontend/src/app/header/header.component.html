@@ -2,19 +2,14 @@
   <div class="container">
     <div class="row">
       <!-- title -->
-      <div class="col-md-3">
-        <h1>Social-Media</h1>
+      <h1 class="col-md-3">Social-Media</h1>
+      <div class="col-md-3" *ngIf="userService.isAdmin()">
+        <a href="/user-list" class="admin btn btn-primary">User List</a>
+        <a href="/post-list" class="admin btn btn-primary">Post List</a>
       </div>
-      <!-- Add post -->
-      <div class = "col-md-6">
+      <div class = "col-md-6" *ngIf="userService.isAuthenticated()">
         <a href="/add-post" class="new-post btn btn-primary">Add Post</a>
-
-      </div>
-      <!-- Login and register-->
-      <div class="col-md-3">
-        <a href="/logout" class="login btn btn-primary" (click)="logout()">Logout</a>
-
-
+        <a href="/logout" color="warn" class="logout btn btn-primary" (click)="logout()">Logout</a>
       </div>
     </div>
   </div>

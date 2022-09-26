@@ -38,7 +38,12 @@ export class LoginComponent implements OnInit {
     this.userService.login(this.loginPayload).subscribe(data => {
         console.log("login success");
         this.matBottomSheetRef.dismiss();
-        this.router.navigateByUrl('/postfeed');
+        if(this.userService.isAdmin()) {
+          this.router.navigateByUrl('/admin-landing');
+        } else {
+          this.router.navigateByUrl('/postfeed');
+        }
+
     }, error => {
         console.log("login failure");
     });

@@ -1,0 +1,28 @@
+<div>
+  <h2> User List</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Post Id</th>
+        <th>Posted By</th>
+        <th>Title</th>
+        <th>Content</th>
+        <th>Time Stamp</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let post of postList">
+        <td>{{post.id}}</td>
+        <td>{{post.username}}</td>
+        <td><input [(ngModel)]="post.title" type="text" value={{post.title}}></td>
+        <td>{{post.content}}</td>
+        <td>{{post.timestamp}}</td>
+        <td>
+          <button mat-flat-button color="primary" (click)="updateOnClick(post)">Register</button>
+          <button mat-flat-button color="warn" (click)="deleteOnClick(post.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

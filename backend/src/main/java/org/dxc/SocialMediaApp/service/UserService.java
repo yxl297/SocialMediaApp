@@ -1,9 +1,11 @@
 package org.dxc.SocialMediaApp.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import org.dxc.SocialMediaApp.entity.Role;
 import org.dxc.SocialMediaApp.entity.User;
 import org.dxc.SocialMediaApp.exception.ResourceNotFoundException;
 import org.dxc.SocialMediaApp.payload.LoginRequestDto;
@@ -74,6 +76,11 @@ public class UserService {
 		return mapToUserDto(user);
 	}
 	
+	public UserDto getUserByUsername(String username) {
+		User user = userRepository.findByUsername(username);
+		return mapToUserDto(user);
+	}
+	
 	public List<UserDto> getAllUsers() {
 		List<User> listOfUsers = userRepository.findAll();
 		List<UserDto> userResponseList = new ArrayList<>();
@@ -91,8 +98,17 @@ public class UserService {
 				loginRequestDto.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authenticate);
 		String authenticationToken = jwtProvider.generateToken(authenticate);
+		
+		UserDto tempUserDto = getUserByUsername(loginRequestDto.getUsername());
+		Collection<Role> userRoles = tempUserDto.getRoles();
+		Boolean isAdmin = false;
+		for(Role role : userRoles) {
+			if (role.getId() == 1) {
+				isAdmin = true;
+			}
+		}
 
-		return new AuthenticationResponse(authenticationToken, loginRequestDto.getUsername());
+		return new AuthenticationResponse(authenticationToken, loginRequestDto.getUsername(), isAdmin);
 	}
 
 	public Optional<org.springframework.security.core.userdetails.User> getCurrentUser() {
@@ -124,5 +140,9 @@ public class UserService {
 		
 		return updatedUserDto;
 		
+	}
+	
+	public List<User> findAll() {
+		return userRepository.findAll();
 	}
 }

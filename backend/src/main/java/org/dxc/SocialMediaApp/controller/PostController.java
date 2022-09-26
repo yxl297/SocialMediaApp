@@ -1,5 +1,8 @@
 package org.dxc.SocialMediaApp.controller;
 
+import java.util.List;
+
+import org.dxc.SocialMediaApp.entity.Post;
 import org.dxc.SocialMediaApp.payload.PostDto;
 import org.dxc.SocialMediaApp.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +40,11 @@ public class PostController {
 	public ResponseEntity<PostDto> getPostById(@PathVariable(name = "id") long id) {
 		log.info("getUserById() in UserController");
 		return ResponseEntity.ok(postService.getPostById(id));
+	}
+	
+	@GetMapping("/all")
+	public List<Post> getAllPosts() {
+		return postService.findAll();
 	}
 
 	@DeleteMapping("admin/delete/{id}")
