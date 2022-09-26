@@ -100,4 +100,29 @@ public class UserService {
 				.getContext().getAuthentication().getPrincipal();
 		return Optional.of(principal);
 	}
+	
+	public void deleteUserById(Long id) {
+		User user = userRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("DELETE", "id", id));
+		userRepository.delete(user);
+	}
+
+	public UserDto updateUser(UserDto userDto, Long id) {
+		User user = userRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("PUT", "id", id));
+		
+		if(userDto.getUid() != null) { user.setUid(userDto.getUid()); }
+		if(userDto.getEmail() != null) { user.setEmail(userDto.getEmail()); }
+		if(userDto.getPassword() != null) { user.setPassword(userDto.getPassword()); }
+		if(userDto.getUsername() != null) { user.setUsername(userDto.getUsername()); }
+		if(userDto.getRoles()!= null) { user.setRoles(userDto.getRoles()); }
+		if(userDto.getPosts() != null) { user.setPosts(userDto.getPosts()); }
+		
+		User updatedUser = userRepository.save(user);
+		
+		UserDto updatedUserDto = mapToUserDto(updatedUser);
+		
+		return updatedUserDto;
+		
+	}
 }

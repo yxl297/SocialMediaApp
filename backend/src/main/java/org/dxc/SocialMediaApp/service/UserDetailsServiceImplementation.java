@@ -1,7 +1,7 @@
 package org.dxc.SocialMediaApp.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 import org.dxc.SocialMediaApp.entity.Role;
 import org.dxc.SocialMediaApp.entity.User;
@@ -30,14 +30,24 @@ public class UserDetailsServiceImplementation implements UserDetailsService{
 		if(user == null) {
 			throw new UsernameNotFoundException("Invalid username or password");
 		}
+		
 		log.info("loadUserByUsername() in UserDetailsServiceImplementation");
-		return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+		return new org.springframework.security.core.userdetails.User(user.getUsername(),
+						user.getPassword(), mapRolesToAuthorities(user.getRoles()));
 	}
 
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-		return roles.stream()
-				.map(role -> new SimpleGrantedAuthority(role.getName()))
-				.collect(Collectors.toList());
+		Collection<GrantedAuthority> authorities = new ArrayList<>(roles.size());
+		
+		for(Role role : roles) {
+			authorities.add(new SimpleGrantedAuthority(role.getName()));
+		}
+		
+		return authorities;
+		
+//		return roles.stream()
+//				.map(role -> new SimpleGrantedAuthority(role.getName()))
+//				.collect(Collectors.toList());
 	}
 
 	

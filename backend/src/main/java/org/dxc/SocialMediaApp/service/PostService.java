@@ -13,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 public class PostService {
 	
@@ -47,8 +44,7 @@ public class PostService {
 		post.setTimeStamp(postDto.getTimeStamp());
 		post.setUsername(postDto.getUsername());
 		
-		return post;
-		
+		return post;	
 	}
 	
 	public PostDto mapToPostDto(Post post) {
@@ -65,6 +61,7 @@ public class PostService {
 	public PostDto getPostById(long id) {
 		Post post = postRepository.findById(id).orElseThrow(
 				()->new ResourceNotFoundException("POST", "id", id));
+		
 		return mapToPostDto(post);
 	}
 
@@ -78,5 +75,29 @@ public class PostService {
 		
 		return postResponseList;
 	}
+	
+	public void deletePostById(Long id) {
+		Post post = postRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("DELETE", "id", id));
+		postRepository.delete(post);
+	}
 
+	public PostDto updatePost(PostDto postDto, Long id) {
+		Post post = postRepository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("PUT", "id", id));
+		
+		if(postDto.getId() != null) { post.setId(postDto.getId()); }
+		if(postDto.getTitle() != null) { post.setTitle(postDto.getTitle()); }
+		if(postDto.getContent() != null) { post.setContent(postDto.getContent()); }
+		if(postDto.getUsername() != null) { post.setUsername(postDto.getUsername()); }
+		if(postDto.getTimeStamp()!= null) { post.setTimeStamp(postDto.getTimeStamp()); }
+		
+		Post updatedPost = postRepository.save(post);
+		
+		PostDto updatedPostDto = mapToPostDto(updatedPost);
+		
+		return updatedPostDto;
+		
+	}
+	
 }

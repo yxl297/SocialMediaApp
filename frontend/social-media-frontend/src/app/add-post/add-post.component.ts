@@ -40,7 +40,8 @@ export class AddPostComponent implements OnInit {
 
 
       this.postService.addPost(this.postPayload).subscribe(data => {
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/postfeed');
+        console.log("post success");
       }, error => {
         console.log('Failure Response');
       })

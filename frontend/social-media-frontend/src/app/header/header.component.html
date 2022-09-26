@@ -1,4 +1,4 @@
-<div class="header">
+<div class="header" *ngIf="userService.isAuthenticated()">
   <div class="container">
     <div class="row">
       <!-- title -->
@@ -6,12 +6,12 @@
         <h1>Social-Media</h1>
       </div>
       <!-- Add post -->
-      <div class = "col-md-6" *ngIf="userService.isAuthenticated()">
+      <div class = "col-md-6">
         <a href="/add-post" class="new-post btn btn-primary">Add Post</a>
 
       </div>
       <!-- Login and register-->
-      <div class="col-md-3" *ngIf="userService.isAuthenticated()">
+      <div class="col-md-3">
         <a href="/logout" class="login btn btn-primary" (click)="logout()">Logout</a>
 
 

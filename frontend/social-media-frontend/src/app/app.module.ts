@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxWebstorageModule } from 'ngx-webstorage';
 import { AddPostComponent } from './add-post/add-post.component';
@@ -24,7 +25,6 @@ import { ForgotPasswordComponent } from './user/forgot-password/forgot-password.
 import { LoginComponent } from './user/login/login.component';
 import { LogoutComponent } from './user/logout/logout.component';
 import { RegisterComponent } from './user/register/register.component';
-
 
 @NgModule({
   declarations: [
@@ -47,6 +47,7 @@ import { RegisterComponent } from './user/register/register.component';
     FormsModule,
     MatButtonModule,
     MatBottomSheetModule,
+    MatPaginatorModule,
     ReactiveFormsModule,
     NgxWebstorageModule.forRoot(),
     HttpClientModule,
